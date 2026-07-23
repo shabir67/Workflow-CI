@@ -61,10 +61,22 @@ jobs:
           git add -f mlruns/
           if git diff --staged --quiet; then
             echo "Tidak ada perubahan artefak."
-          else
-            git commit -m "chore: store trained model artifacts from CI run ${{ github.run_number }} [skip ci]"
-            git push
+            exit 0
           fi
+          git commit -m "chore: store trained model artifacts from CI run ${{ github.run_number }} [skip ci]"
+          # Remote dapat bergerak di antara checkout dan push (misalnya karena
+          # run lain atau push manual), sehingga push langsung bisa ditolak
+          # non-fast-forward. Rebase lalu coba lagi beberapa kali.
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Push berhasil pada percobaan ke-$attempt."
+              exit 0
+            fi
+            echo "Push ditolak, menarik perubahan remote lalu mencoba lagi..."
+            git pull --rebase origin main
+          done
+          echo "Push tetap gagal setelah 3 percobaan."
+          exit 1
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -72,18 +84,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # --env-manager local wajib. Tanpanya MLflow memakai virtualenv, yang
-      # memaksa base image ubuntu:20.04 dan memasang Python 3.9 lewat
-      # get-pip.py — dan get-pip.py sudah tidak mendukung Python 3.9 sehingga
-      # build selalu gagal. Dengan `local`, MLflow memakai base image
-      # python:3.12.7-slim sesuai versi Python model.
+      # Dua penyesuaian penting pada perintah di bawah:
+      #
+      # 1. --env-manager local wajib. Tanpanya MLflow memakai virtualenv, yang
+      #    memaksa base image ubuntu:20.04 dan memasang Python 3.9 lewat
+      #    get-pip.py — dan get-pip.py sudah tidak mendukung Python 3.9 sehingga
+      #    build selalu gagal. Dengan `local`, MLflow memakai base image
+      #    python:3.12.7-slim sesuai versi Python model.
+      #
+      # 2. --enable-mlserver sengaja TIDAK dipakai. MLServer 1.3.5 yang dipin
+      #    oleh MLflow 2.19.0 gagal pada Python 3.12 (asyncio.get_event_loop()
+      #    melempar RuntimeError), sehingga worker inferensi mati dan model
+      #    tidak pernah termuat. Server bawaan MLflow menyediakan /ping dan
+      #    /invocations yang justru sesuai dengan bukti serving yang diminta.
       - name: Build Docker image with MLflow
         run: |
           mlflow models build-docker \
             --model-uri "runs:/$RUN_ID/model" \
             --name "${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME" \
-            --env-manager local \
-            --enable-mlserver
+            --env-manager local
 
       - name: Push image to Docker Hub
         run: |
