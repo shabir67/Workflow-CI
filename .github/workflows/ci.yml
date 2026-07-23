@@ -72,11 +72,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # --env-manager local wajib. Tanpanya MLflow memakai virtualenv, yang
+      # memaksa base image ubuntu:20.04 dan memasang Python 3.9 lewat
+      # get-pip.py — dan get-pip.py sudah tidak mendukung Python 3.9 sehingga
+      # build selalu gagal. Dengan `local`, MLflow memakai base image
+      # python:3.12.7-slim sesuai versi Python model.
       - name: Build Docker image with MLflow
         run: |
           mlflow models build-docker \
             --model-uri "runs:/$RUN_ID/model" \
             --name "${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME" \
+            --env-manager local \
             --enable-mlserver
 
       - name: Push image to Docker Hub
