@@ -60,23 +60,15 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f mlruns/
           if git diff --staged --quiet; then
-            echo "Tidak ada perubahan artefak."
-            exit 0
-          fi
-          git commit -m "chore: store trained model artifacts from CI run ${{ github.run_number }} [skip ci]"
-          # Remote dapat bergerak di antara checkout dan push (misalnya karena
-          # run lain atau push manual), sehingga push langsung bisa ditolak
-          # non-fast-forward. Rebase lalu coba lagi beberapa kali.
-          for attempt in 1 2 3; do
-            if git push; then
-              echo "Push berhasil pada percobaan ke-$attempt."
-              exit 0
-            fi
-            echo "Push ditolak, menarik perubahan remote lalu mencoba lagi..."
+            echo "Tidak ada perubahan artefak, tidak ada yang di-commit."
+          else
+            git commit -m "chore: store trained model artifacts from CI run ${{ github.run_number }} [skip ci]"
+            # Run CI sebelumnya sudah meng-commit artefak sehingga main di remote
+            # bergerak lebih maju dari checkout run ini. Rebase dulu sebelum push
+            # agar tidak ditolak non-fast-forward.
             git pull --rebase origin main
-          done
-          echo "Push tetap gagal setelah 3 percobaan."
-          exit 1
+            git push origin HEAD:main
+          fi
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
