@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/mlruns/0/c796eca5d5af46fabbccefbc2fa808f9/artifacts
+end_time: 1784825982334
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c796eca5d5af46fabbccefbc2fa808f9
+run_name: aged-moth-340
+run_uuid: c796eca5d5af46fabbccefbc2fa808f9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1784825974895
+status: 3
+tags: []
+user_id: runner
