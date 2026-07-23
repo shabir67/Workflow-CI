@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/mlruns/0/f5fcebda220147b3aa868a31ae177a0b/artifacts
+end_time: 1784826980097
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f5fcebda220147b3aa868a31ae177a0b
+run_name: flawless-dog-136
+run_uuid: f5fcebda220147b3aa868a31ae177a0b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1784826975527
+status: 3
+tags: []
+user_id: runner
