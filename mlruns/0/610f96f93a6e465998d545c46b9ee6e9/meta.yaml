@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/mlruns/0/610f96f93a6e465998d545c46b9ee6e9/artifacts
+end_time: 1784827654575
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 610f96f93a6e465998d545c46b9ee6e9
+run_name: calm-pug-647
+run_uuid: 610f96f93a6e465998d545c46b9ee6e9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1784827649753
+status: 3
+tags: []
+user_id: runner
