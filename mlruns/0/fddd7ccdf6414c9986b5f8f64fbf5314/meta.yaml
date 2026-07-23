@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/mlruns/0/fddd7ccdf6414c9986b5f8f64fbf5314/artifacts
+end_time: 1784826960417
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fddd7ccdf6414c9986b5f8f64fbf5314
+run_name: efficient-wren-428
+run_uuid: fddd7ccdf6414c9986b5f8f64fbf5314
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1784826953582
+status: 3
+tags: []
+user_id: runner
