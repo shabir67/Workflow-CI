@@ -1,16 +1,16 @@
-# Workflow-CI — Telco Customer Churn
+# Workflow-CI - Telco Customer Churn
 
 Submission kriteria 3 kelas Membangun Sistem Machine Learning (Dicoding).
 
 ## Struktur
 
-- `MLProject/` — MLflow Project dengan entry point `main` untuk retraining otomatis
-  - `MLProject` — definisi project dan parameter
-  - `conda.yaml` — environment (Python 3.12.7, mlflow 2.19.0)
-  - `modelling.py` — pelatihan Random Forest dengan manual logging
-  - `telco_preprocessing/` — dataset siap latih (`train.csv`, `test.csv`)
-  - `DockerHub.txt` — tautan Docker image publik
-- `.github/workflows/ci.yml` — workflow CI: melatih model, menyimpan artefak ke
+- `MLProject/` - MLflow Project dengan entry point `main` untuk retraining otomatis
+  - `MLProject` - definisi project dan parameter
+  - `conda.yaml` - environment (Python 3.12.7, mlflow 2.19.0)
+  - `modelling.py` - pelatihan Random Forest dengan manual logging
+  - `telco_preprocessing/` - dataset siap latih (`train.csv`, `test.csv`)
+  - `DockerHub.txt` - tautan Docker image publik
+- `.github/workflows/ci.yml` - workflow CI: melatih model, menyimpan artefak ke
   repositori, membangun Docker image dengan `mlflow build-docker`, lalu mendorongnya
   ke Docker Hub
 

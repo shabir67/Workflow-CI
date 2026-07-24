@@ -71,7 +71,7 @@ def main() -> int:
 
         # Signature dideklarasikan sebagai float64 seluruhnya. Kolom hasil one-hot
         # bertipe int64, dan schema enforcement MLflow menolak float yang dikirim
-        # ke kolom bertipe integer — hal yang pasti terjadi saat serving karena
+        # ke kolom bertipe integer - hal yang pasti terjadi saat serving karena
         # klien JSON mengirim angka tanpa membedakan int dan float.
         mlflow.sklearn.log_model(
             model,
