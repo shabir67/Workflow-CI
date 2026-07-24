@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/mlruns/0/473a4bc116ff486cb11a29425aa4033f/artifacts
+end_time: 1784878816748
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 473a4bc116ff486cb11a29425aa4033f
+run_name: whimsical-fowl-345
+run_uuid: 473a4bc116ff486cb11a29425aa4033f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1784878809743
+status: 3
+tags: []
+user_id: runner
